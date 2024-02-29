@@ -1,10 +1,14 @@
-import './App.css'
+import "./App.css";
+import Component from "./components/Component";
+import Filter from "./components/Filter";
 
 function App() {
-
   return (
-    <p></p>
-  )
+    <>
+      <Filter />
+      <Component />
+    </>
+  );
 }
 
-export default App
+export default App;
