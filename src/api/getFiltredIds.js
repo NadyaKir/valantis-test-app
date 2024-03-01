@@ -1,34 +1,33 @@
 import getToken from "../utils/getToken";
+import getUniqueDataById from "../utils/getUniqueDataById";
 
 const url = "https://api.valantis.store:41000/";
 
-const getField = async () => {
+const getFilteredIds = async (params) => {
   try {
-    const responseBrands = await fetch(url, {
+    const responseIds = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-Auth": getToken(),
       },
       body: JSON.stringify({
-        action: "get_fields",
-        params: { field: "brand" },
+        action: "filter",
+        params: params,
       }),
     });
 
-    if (!responseBrands.ok) {
+    if (!responseIds.ok) {
       throw new Error("Ids response was not ok");
     }
 
-    const allFields = await responseBrands.json();
-    const filtredFields = allFields.result.filter((field) => field !== null);
-    const uniqueFields = [...new Set(filtredFields)];
+    const filteredIds = (await responseIds.json()).result;
 
-    return uniqueFields;
+    return filteredIds;
   } catch (error) {
     console.error("Fetch error", error);
     throw error;
   }
 };
 
-export default getField;
+export default getFilteredIds;

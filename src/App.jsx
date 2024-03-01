@@ -1,12 +1,68 @@
-import "./App.css";
-import Component from "./components/Component";
+import { useEffect, useState } from "react";
+
+import getItems from "./api/getItems";
+import getFilteredIds from "./api/getFiltredIds";
+import getIds from "./api/getIds";
+
+import Table from "./components/Table";
 import Filter from "./components/Filter";
+import Button from "./components/Button";
+
+import "./App.css";
 
 function App() {
+  const [data, setData] = useState([]);
+  const [action, setAction] = useState("get_ids");
+  const [params, setParams] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+
+  console.log(action);
+  console.log(params);
+
+  useEffect(() => {
+    async function updateState() {
+      try {
+        if (action === 'filter'){
+          const filteredIds = await getFilteredIds(params);
+          console.log('filteredIDS', filteredIds)
+          const data = await getItems(filteredIds);
+          setData(data);
+        } else {
+          const itemsIds = await getIds(action, currentPage);
+          console.log('Itemdsids', itemsIds)
+          const data = await getItems(itemsIds);
+          setData(data);
+        }
+
+        
+      } catch (e) {
+        console.error("Error initialization items", e);
+        throw e;
+      }
+    }
+
+    updateState();
+  }, [action, params, currentPage]);
+
+  // console.log(data);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
   return (
     <>
-      <Filter />
-      <Component />
+      <Filter setAction={setAction} setParams={setParams} params={params} />
+      <Table items={data} />
+      <Button onClick={handlePrevPage}>Prev</Button>
+      <p>{currentPage}</p>
+      <Button onClick={handleNextPage}>Next</Button>
     </>
   );
 }
