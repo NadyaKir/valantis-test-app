@@ -13,6 +13,7 @@ function App() {
   const [action, setAction] = useState("get_ids");
   const [params, setParams] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   console.log(action);
   console.log(params);
@@ -25,15 +26,17 @@ function App() {
           console.log("filteredIDS", filteredIds);
           const data = await getItems(filteredIds);
           setData(data);
+          setIsLoading(false);
         } else {
           const itemsIds = await getIds(action, currentPage);
           console.log("Itemdsids", itemsIds);
           const data = await getItems(itemsIds);
           setData(data);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error initialization items", error);
-        if (error.id) {
+        if (error.message === 'Status 500') {
           console.log("Retrying request...");
           return updateState();
         }
@@ -42,17 +45,19 @@ function App() {
     }
 
     updateState();
-  }, [action, params, currentPage]);
+  }, [action, params, currentPage, isLoading]);
 
   // console.log(data);
 
   const handlePrevPage = () => {
+    setIsLoading(true);
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
     }
   };
 
   const handleNextPage = () => {
+    setIsLoading(true);
     setCurrentPage((prev) => prev + 1);
   };
 
@@ -62,11 +67,12 @@ function App() {
     setCurrentPage(1);
   };
 
-  const loading = <p>Loading...</p>;
+  console.log(isLoading)
+
   return (
     <div className="h-screen w-4/5 mx-auto gap-y-5 flex flex-col py-5">
       <Filter onChange={handleFilterChange} params={params} />
-      {data.length !== 0 ? <Table items={data} /> : loading}
+      <Table items={data} isLoading={isLoading} />
       <Pagination
         disabled={action === "filter"}
         currentPage={currentPage}

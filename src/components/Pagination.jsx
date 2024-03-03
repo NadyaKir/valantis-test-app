@@ -6,7 +6,7 @@ export default function Pagination({
   currentPage,
   disabled,
 }) {
-    const color = disabled ? "text-gray-400" : "text-black";
+  const color = disabled ? "text-gray-400" : "text-black";
   return (
     <div>
       <div className="flex items-center justify-center">
@@ -25,9 +25,7 @@ export default function Pagination({
             />
           </svg>
         </Button>
-        <span className={`${color}`}>
-          {currentPage}
-        </span>
+        <span className={`${color}`}>{currentPage}</span>
         <Button onClick={handleNextPage} disabled={disabled}>
           <svg
             className={`h-8 w-8 ${color} pointer`}

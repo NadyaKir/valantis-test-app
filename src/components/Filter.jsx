@@ -23,7 +23,7 @@ export default function Filter({ onChange }) {
 
   return (
     <form>
-      <label htmlFor="brands">Brand:</label>
+      <label htmlFor="brands">Бренд:</label>
       <select
         className=""
         id="brands"
@@ -31,7 +31,7 @@ export default function Filter({ onChange }) {
         value={selectedBrand}
         onChange={handleSelectChange}
       >
-        <option value="">Select Brand</option>
+        <option value="">Выберите бренд</option>
         {fields.map((field, index) => (
           <option key={index} value={field}>
             {field}
