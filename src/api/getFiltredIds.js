@@ -15,14 +15,14 @@ const getFilteredIds = async (params) => {
     });
 
     if (!responseIds.ok) {
-      throw new Error("Ids response was not ok");
+      throw new Error(`Status ${responseIds.status}`);
     }
 
     const filteredIds = (await responseIds.json()).result;
 
     return filteredIds;
   } catch (error) {
-    console.error("Fetch error", error);
+    console.error("Fetch error", error.message);
     throw error;
   }
 };

@@ -17,7 +17,7 @@ export default async function getItems(ids) {
     });
 
     if (!responseItems.ok) {
-      throw new Error("Items response was not ok");
+      throw new Error(`Status ${responseItems.status}`);
     }
     const data = (await responseItems.json()).result;
     console.log("get items DATA", data);
@@ -25,7 +25,7 @@ export default async function getItems(ids) {
     console.log("UniqData", uniqueData);
     return uniqueData;
   } catch (error) {
-    console.error("Fetch error", error);
+    console.error("Fetch error", error.message);
     throw error;
   }
 }

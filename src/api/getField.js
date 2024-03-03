@@ -15,7 +15,7 @@ const getField = async () => {
     });
 
     if (!responseBrands.ok) {
-      throw new Error("Ids response was not ok");
+      throw new Error(`Status ${responseBrands.status}`);
     }
 
     const allFields = await responseBrands.json();
@@ -24,7 +24,7 @@ const getField = async () => {
 
     return uniqueFields;
   } catch (error) {
-    console.error("Fetch error", error);
+    console.error("Fetch error", error.message);
     throw error;
   }
 };

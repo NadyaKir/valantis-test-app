@@ -17,7 +17,7 @@ const getIds = async (action, currentPage) => {
       }),
     });
     if (!responseIds.ok) {
-      throw new Error("Ids response was not ok");
+      throw new Error(`Status ${responseIds.status}`);
     }
 
     const ids = (await responseIds.json()).result;
@@ -26,7 +26,7 @@ const getIds = async (action, currentPage) => {
 
     return uniqueIds;
   } catch (error) {
-    console.error("Fetch error", error);
+    console.error("Fetch error", error.message);
     throw error;
   }
 };
