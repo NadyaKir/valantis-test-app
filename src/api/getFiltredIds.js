@@ -1,11 +1,8 @@
-import getToken from "../utils/getToken";
-import getUniqueDataById from "../utils/getUniqueDataById";
-
-const url = "https://api.valantis.store:41000/";
+import { URL, getToken } from "../utils/getToken";
 
 const getFilteredIds = async (params) => {
   try {
-    const responseIds = await fetch(url, {
+    const responseIds = await fetch(URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

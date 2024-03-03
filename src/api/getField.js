@@ -1,10 +1,8 @@
-import getToken from "../utils/getToken";
-
-const url = "https://api.valantis.store:41000/";
+import { URL, getToken } from "../utils/getToken";
 
 const getField = async () => {
   try {
-    const responseBrands = await fetch(url, {
+    const responseBrands = await fetch(URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

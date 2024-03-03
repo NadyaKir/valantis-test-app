@@ -25,6 +25,7 @@ export default function Filter({ onChange }) {
     <form>
       <label htmlFor="brands">Brand:</label>
       <select
+        className=""
         id="brands"
         name="brands"
         value={selectedBrand}

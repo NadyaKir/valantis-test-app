@@ -31,9 +31,13 @@ function App() {
           const data = await getItems(itemsIds);
           setData(data);
         }
-      } catch (e) {
-        console.error("Error initialization items", e);
-        throw e;
+      } catch (error) {
+        console.error("Error initialization items", error);
+        if (error.id) {
+          console.log("Retrying request...");
+          return updateState();
+        }
+        throw error;
       }
     }
 
@@ -55,8 +59,8 @@ function App() {
   const handleFilterChange = (action, params) => {
     setAction(action);
     setParams(params);
-    setCurrentPage(1)
-  }
+    setCurrentPage(1);
+  };
 
   const loading = <p>Loading...</p>;
   return (
@@ -64,7 +68,7 @@ function App() {
       <Filter onChange={handleFilterChange} params={params} />
       {data.length !== 0 ? <Table items={data} /> : loading}
       <Pagination
-        disabled={action === 'filter'}
+        disabled={action === "filter"}
         currentPage={currentPage}
         handlePrevPage={handlePrevPage}
         handleNextPage={handleNextPage}
