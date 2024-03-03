@@ -1,3 +1,5 @@
-export default function Button({ children, onClick }) {
-  return <button onClick={onClick}>{children}</button>;
+
+
+export default function Button({ children, onClick, disabled }) {
+  return <button onClick={onClick} disabled={disabled}>{children}</button>;
 }

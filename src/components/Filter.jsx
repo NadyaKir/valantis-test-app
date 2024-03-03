@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import getField from "../api/getField";
 
-export default function Filter({ params, setAction, setParams }) {
+export default function Filter({ onChange }) {
   const [fields, setFields] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("Select brand");
 
@@ -16,10 +16,9 @@ export default function Filter({ params, setAction, setParams }) {
   }, []);
 
   const handleSelectChange = (event) => {
-    const brand = event.target.value
+    const brand = event.target.value;
     setSelectedBrand(brand);
-    setAction("filter");
-    setParams({ brand: brand });
+    onChange("filter", { brand });
   };
 
   return (
@@ -39,7 +38,5 @@ export default function Filter({ params, setAction, setParams }) {
         ))}
       </select>
     </form>
-    
-
   );
 }

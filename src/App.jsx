@@ -6,9 +6,7 @@ import getIds from "./api/getIds";
 
 import Table from "./components/Table";
 import Filter from "./components/Filter";
-import Button from "./components/Button";
-
-import "./App.css";
+import Pagination from "./components/Pagination";
 
 function App() {
   const [data, setData] = useState([]);
@@ -22,19 +20,17 @@ function App() {
   useEffect(() => {
     async function updateState() {
       try {
-        if (action === 'filter'){
+        if (action === "filter") {
           const filteredIds = await getFilteredIds(params);
-          console.log('filteredIDS', filteredIds)
+          console.log("filteredIDS", filteredIds);
           const data = await getItems(filteredIds);
           setData(data);
         } else {
           const itemsIds = await getIds(action, currentPage);
-          console.log('Itemdsids', itemsIds)
+          console.log("Itemdsids", itemsIds);
           const data = await getItems(itemsIds);
           setData(data);
         }
-
-        
       } catch (e) {
         console.error("Error initialization items", e);
         throw e;
@@ -56,14 +52,24 @@ function App() {
     setCurrentPage((prev) => prev + 1);
   };
 
+  const handleFilterChange = (action, params) => {
+    setAction(action);
+    setParams(params);
+    setCurrentPage(1)
+  }
+
+  const loading = <p>Loading...</p>;
   return (
-    <>
-      <Filter setAction={setAction} setParams={setParams} params={params} />
-      <Table items={data} />
-      <Button onClick={handlePrevPage}>Prev</Button>
-      <p>{currentPage}</p>
-      <Button onClick={handleNextPage}>Next</Button>
-    </>
+    <div className="h-screen w-4/5 mx-auto gap-y-5 flex flex-col py-5">
+      <Filter onChange={handleFilterChange} params={params} />
+      {data.length !== 0 ? <Table items={data} /> : loading}
+      <Pagination
+        disabled={action === 'filter'}
+        currentPage={currentPage}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+      />
+    </div>
   );
 }
 
