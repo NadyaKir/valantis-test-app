@@ -4,12 +4,13 @@ import getField from "../api/getField";
 
 export default function Filter({ onChange }) {
   const [fields, setFields] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState("Select brand");
+  const [selectedBrand, setSelectedBrand] = useState("Выберите бренд");
 
   useEffect(() => {
     async function updateState() {
       const fields = await getField();
-      setFields(fields);
+      console.log('fields',fields)
+      setFields(fields.sort());
     }
 
     updateState();
@@ -21,23 +22,34 @@ export default function Filter({ onChange }) {
     onChange("filter", { brand });
   };
 
+  const handleResetButtonClick = () => {
+    onChange("get_ids", { brand: "Select brand" });
+    setSelectedBrand("Select brand");
+  };
+
   return (
-    <form>
-      <label htmlFor="brands">Бренд:</label>
-      <select
-        className=""
-        id="brands"
-        name="brands"
-        value={selectedBrand}
-        onChange={handleSelectChange}
-      >
-        <option value="">Выберите бренд</option>
-        {fields.map((field, index) => (
-          <option key={index} value={field}>
-            {field}
+    <div className="flex flex-row ">
+      <form className="mr-2">
+        <label className="mr-2" htmlFor="brands">
+          Бренд:
+        </label>
+        <select
+          id="brands"
+          name="brands"
+          value={selectedBrand}
+          onChange={handleSelectChange}
+        >
+          <option value="" selected>
+            Выберите бренд
           </option>
-        ))}
-      </select>
-    </form>
+          {fields.map((field, index) => (
+            <option key={index} value={field}>
+              {field}
+            </option>
+          ))}
+        </select>
+      </form>
+      <button onClick={handleResetButtonClick}>Сбросить фильтр</button>
+    </div>
   );
 }
