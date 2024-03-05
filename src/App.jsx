@@ -7,7 +7,8 @@ import getIds from "./api/getIds";
 import Table from "./components/Table";
 import Filter from "./components/Filter";
 import Pagination from "./components/Pagination";
-import formatData from "./utils/formateData";
+
+import formatData from "./utils/formatData";
 
 function App() {
   const [data, setData] = useState([]);
@@ -16,8 +17,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(action);
-  console.log(params);
+  console.log("action", action);
+  console.log("params", params);
 
   console.log("data: ", data);
   useEffect(() => {

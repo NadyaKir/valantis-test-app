@@ -1,6 +1,6 @@
 import { URL, getToken } from "../utils/getToken";
 
-const getField = async () => {
+const getField = async (field) => {
   try {
     const responseBrands = await fetch(URL, {
       method: "POST",
@@ -10,7 +10,7 @@ const getField = async () => {
       },
       body: JSON.stringify({
         action: "get_fields",
-        params: { field: "brand" },
+        params: { field: field },
       }),
     });
 

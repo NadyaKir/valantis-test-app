@@ -19,7 +19,6 @@ const getFilteredIds = async (params) => {
     }
 
     const filteredIds = (await responseIds.json()).result;
-
     return filteredIds;
   } catch (error) {
     console.error("Fetch error", error.message);
