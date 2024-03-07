@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import debounce from "lodash.debounce";
 
 import getField from "../api/getField";
@@ -17,23 +17,26 @@ export default function Filter({ onChange }) {
     updateState();
   }, []);
 
-  const handleSelectChange = (event) => {
+  const handleSelectChange = useCallback((event) => {
     const brand = event.target.value;
     setSelectedBrand(brand);
     onChange("filter", { brand });
     setSearchTerm("");
-  };
+  });
 
   const handleResetButtonClick = () => {
     onChange("get_ids");
     setSelectedBrand("Выберите бренд");
   };
 
-  const debouncedSearch = debounce((searchTerm) => {
-    searchTerm.length > 0
-      ? onChange("filter", { product: searchTerm })
-      : onChange("get_ids", {});
-  }, 500);
+  const debouncedSearch = useCallback(
+    debounce((searchTerm) => {
+      searchTerm.length > 0
+        ? onChange("filter", { product: searchTerm })
+        : onChange("get_ids", {});
+    }, 500),
+    []
+  );
 
   const handleSearch = (event) => {
     const term = event.target.value;

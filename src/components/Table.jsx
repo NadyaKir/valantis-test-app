@@ -26,8 +26,8 @@ export default function Table({ items, isLoading }) {
   );
 
   const noDataMessage = (
-    <tr>
-      <td className="h-screen text-center" colSpan={4}>
+    <tr className="h-screen text-center">
+      <td className="text-center" colSpan={4}>
         <p>Нет данных :(</p>
       </td>
     </tr>
@@ -38,7 +38,7 @@ export default function Table({ items, isLoading }) {
       <header className="px-5 py-4 border-b border-gray-100">
         <h2 className="font-semibold text-gray-800 ">Товары</h2>
       </header>
-      <div className="p-3 overflow-y-scroll">
+      <div className="p-3">
         <table className="table-auto w-full">
           <thead className="text-xs text-center font-semibold uppercase text-gray-400 bg-gray-50">
             <tr>

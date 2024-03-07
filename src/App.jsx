@@ -46,6 +46,8 @@ function App() {
           return updateState();
         }
         throw error;
+      } finally {
+        setIsLoading(false); // Установка isLoading в false после получения данных
       }
     }
 
