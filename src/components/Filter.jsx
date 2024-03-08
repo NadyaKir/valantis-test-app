@@ -24,17 +24,17 @@ export default function Filter({ onChange }) {
     setSearchTerm("");
   });
 
-  const handleResetButtonClick = () => {
+  const handleResetButtonClick = useCallback(() => {
     onChange("get_ids");
     setSelectedBrand("Выберите бренд");
-  };
+  });
 
   const debouncedSearch = useCallback(
     debounce((searchTerm) => {
       searchTerm.length > 0
         ? onChange("filter", { product: searchTerm })
         : onChange("get_ids", {});
-    }, 500),
+    }, 1000),
     []
   );
 
