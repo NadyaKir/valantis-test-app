@@ -14,7 +14,7 @@ export default function Table({ items, isLoading }) {
 
   const spinner = (
     <tr>
-      <td className="h-screen text-center" colSpan={4}>
+      <td className="text-center" colSpan={4}>
         <SyncLoader
           color="rgba(142, 142, 142, 1)"
           size={9}
@@ -26,7 +26,7 @@ export default function Table({ items, isLoading }) {
   );
 
   const noDataMessage = (
-    <tr className="h-screen text-center">
+    <tr className="h-full">
       <td className="text-center" colSpan={4}>
         <p>Нет данных :(</p>
       </td>
@@ -34,12 +34,12 @@ export default function Table({ items, isLoading }) {
   );
 
   return (
-    <div className="w-full h-full max-w-6xl overflow-y-auto mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+    <div className="w-full h-full max-w-6xl overflow-y-auto mx-auto bg-white shadow-lg rounded-sm border border-gray-200 flex flex-col">
       <header className="px-5 py-4 border-b border-gray-100">
         <h2 className="font-semibold text-gray-800 ">Товары</h2>
       </header>
-      <div className="p-3">
-        <table className="table-auto w-full">
+      <div className="p-3 flex-grow">
+        <table className="table-auto w-full h-full">
           <thead className="text-xs text-center font-semibold uppercase text-gray-400 bg-gray-50">
             <tr>
               <th className="p-3 whitespace-nowrap">ID</th>
@@ -48,7 +48,7 @@ export default function Table({ items, isLoading }) {
               <th className="p-3 whitespace-nowrap">Бренд</th>
             </tr>
           </thead>
-          <tbody className="text-sm divide-y divide-gray-100">
+          <tbody className="text-sm divide-y divide-gray-100 h-full">
             {!isLoading
               ? items.length > 0
                 ? products
